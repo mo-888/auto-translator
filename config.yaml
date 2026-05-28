@@ -1,0 +1,49 @@
+# auto-translator 配置示例
+# 运行: python translate.py --config config.yaml
+# 强制重新翻译: python translate.py --config config.yaml --force
+
+# ===== 必需字段 =====
+input_dir: './docs'           # 要翻译的根目录
+output_dir: './translated'    # 可选，不填则在原文件旁生成翻译文件
+source_lang: 'en'             # 源语言代码（不填则本地模式自动检测，AI 模式报错）
+languages: ['zh', 'es', 'ja'] # 目标语言列表
+
+file_patterns:
+  include: '.*\.md$'         # 正则：包含哪些文件（单引号避免 YAML 转义问题）
+  exclude: '.*_zh\..*|.*_es\..*|.*_ja\..*'  # 排除已翻译文件
+
+translation_type: 'local'     # 'local'（argos-translate）或 'ai'（OpenAI 风格 API）
+deep_translation: true        # 深度翻译：自动调整跨文件链接
+
+# ===== 本地模式配置（translation_type = 'local' 时使用）=====
+local_config:
+  engine: 'argos-translate'
+  # 语言包需提前安装，工具不自动下载：
+  #   pip install argos-translate
+  #   argospm install translate-en_zh
+  #   argospm install translate-en_es
+  #   argospm install translate-en_ja
+
+# ===== AI 模式配置（translation_type = 'ai' 时使用）=====
+# 取消注释并填写以下字段以启用 AI 翻译
+# ai_config:
+#   endpoint: 'https://api.openai.com/v1/chat/completions'
+#   api_key: 'sk-xxx'
+#   model: 'gpt-4'
+#   temperature: 0.3
+#   max_tokens: 2000
+#   system_prompt: |
+#     你是一个专业翻译助手，将 Markdown 文档从 {source_lang} 翻译成 {target_lang}。
+#     保留所有 Markdown 格式、代码块、frontmatter、链接 URL 不变，只翻译自然语言文本。
+#   user_prompt_template: '请翻译以下文本到 {target_lang}：\n\n{content}'
+#   retry_statuses: [429, 500, 502, 503, 504]
+#   retry_max: 3
+#   retry_backoff_factor: 2
+
+# ===== 全局选项 =====
+max_workers: 4                # 并发翻译文件数
+dry_run: false                # true：只列出待处理文件，不实际翻译
+quiet: false                  # true：只输出错误日志
+cache: true                   # true：基于 SHA256 哈希跳过未修改文件
+# glossary: './glossary.csv'  # 术语表（仅 AI 模式生效），格式：source,target
+verify: false                 # true：检查翻译完整性，报告缺失文件

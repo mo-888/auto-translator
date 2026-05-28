@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# 测试缓存
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 翻译输出目录
+translated/
+.translation_cache.json
+
+# 本地配置（可能含 API key，不提交）
+config.local.yaml
+config.local.json
+*.local.yaml
+*.local.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
