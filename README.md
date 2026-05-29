@@ -16,28 +16,57 @@ Python CLI 工具，递归翻译 Markdown 文档目录，支持本地引擎（ar
 
 ## 安装
 
+### 方式一：运行安装脚本（推荐）
+
+**Linux / macOS:**
 ```bash
+chmod +x setup.sh && ./setup.sh
+```
+
+**Windows:**
+```batch
+setup.bat
+```
+
+### 方式二：手动安装
+
+```bash
+# 创建虚拟环境（避免系统 pip 冲突）
+python3 -m venv .venv
+
+# 激活虚拟环境
+source .venv/bin/activate        # Linux/macOS
+.venv\Scripts\activate           # Windows
+
+# 安装依赖
 pip install pyyaml requests
 ```
 
-**本地模式额外安装语言包：**
+**本地模式额外安装（可选）：**
 
 ```bash
-pip install argos-translate
+pip install argostranslate
 
-# 按需安装语言包（示例：英→中/西/日）
-argospm install translate-en_zh
-argospm install translate-en_es
-argospm install translate-en_ja
+# 按需安装语言包
+python -m argostranslate.package --install-package translate-en_zh
+python -m argostranslate.package --install-package translate-en_es
+python -m argostranslate.package --install-package translate-en_ja
 ```
 
 ## 快速开始
 
 ```bash
+# 激活虚拟环境（每次使用前）
+source .venv/bin/activate        # Linux/macOS
+.venv\Scripts\activate           # Windows
+
+# 或直接用便捷脚本（Linux/macOS）
+./run.sh --config config.yaml
+
 # 1. 复制并编辑配置文件
 cp config.yaml my-config.yaml
 
-# 2. 预览待翻译文件（dry_run）
+# 2. 预览待翻译文件（在 config 中设置 dry_run: true）
 python translate.py --config my-config.yaml
 
 # 3. 执行翻译

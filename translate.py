@@ -255,8 +255,8 @@ def translate_local(text: str, src_lang: str, tgt_lang: str) -> str:
     """使用 argos-translate 进行本地翻译"""
     if argostranslate is None:
         raise RuntimeError(
-            "argos-translate 未安装。请运行: pip install argos-translate\n"
-            f"然后安装语言包: argospm install translate-{src_lang}_{tgt_lang}"
+            "argostranslate 未安装。请运行: pip install argostranslate\n"
+            f"然后安装语言包: python -m argostranslate.package --install-package translate-{src_lang}_{tgt_lang}"
         )
     installed = argostranslate.translate.get_installed_languages()
     src_obj = next((l for l in installed if l.code == src_lang), None)
@@ -264,7 +264,7 @@ def translate_local(text: str, src_lang: str, tgt_lang: str) -> str:
     if src_obj is None or tgt_obj is None:
         raise RuntimeError(
             f"语言包 {src_lang}->{tgt_lang} 未安装。\n"
-            f"请运行: argospm install translate-{src_lang}_{tgt_lang}"
+            f"请运行: python -m argostranslate.package --install-package translate-{src_lang}_{tgt_lang}"
         )
     translation = src_obj.get_translation(tgt_obj)
     return translation.translate(text)

@@ -1,5 +1,5 @@
 pyyaml>=5.4
 requests>=2.28.0
-# argos-translate  # 本地模式需要，按需安装:
-# pip install argos-translate
-# argospm install translate-en_zh
+# argostranslate  # 本地模式需要，按需安装:
+# pip install argostranslate
+# 安装语言包: python -m argostranslate.package --install-package translate-en_zh
