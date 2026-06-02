@@ -325,7 +325,7 @@ def translate_ai(
     }
 
     for attempt in range(retry_max + 1):
-        resp = requests.post(endpoint, json=payload, headers=headers, timeout=60)
+        resp = requests.post(endpoint, json=payload, headers=headers, timeout=180)
         if resp.status_code == 200:
             return resp.json()["choices"][0]["message"]["content"]
         if resp.status_code in retry_statuses and attempt < retry_max:
